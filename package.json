@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "start": "nodemon index.ts"
+  },
+  "dependencies": {
+    "socket.io": "^4.5.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/uuid": "^8.3.4",
+    "nodemon": "^2.0.16",
+    "ts-node": "^10.8.0"
+  }
+}
