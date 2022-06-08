@@ -12,7 +12,7 @@ export interface RoomData {
   isGlobal: boolean;
 }
 
-const globalRooms: RoomData[] = [
+export const globalRooms: RoomData[] = [
   {
     id: "globalRoom1",
     roomName: "Global Room 1",
@@ -20,7 +20,15 @@ const globalRooms: RoomData[] = [
     roomCreator: "",
     roomAvatar: "images/chat-logo.svg",
     roomUsers: [],
-    roomMessages: [],
+    roomMessages: [
+      {
+        id: "dummyUser",
+        roomId: "globalRoom1",
+        userId: "dummyUser",
+        message: "this is dummy message.",
+        timestamp: new Date(),
+      },
+    ],
     isGlobal: true,
   },
 ];

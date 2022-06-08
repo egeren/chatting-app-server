@@ -1,3 +1,5 @@
+import { Socket } from "socket.io";
+
 export interface UserData {
   id: string;
   username: string;

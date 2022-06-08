@@ -9,6 +9,7 @@ export const io = new Server({
 
 io.on("connection", (socket) => {
   console.log("New connection! ", socket.id);
+
   userActions(socket);
 });
 
