@@ -59,7 +59,7 @@ export const setUserOffline = (userId: string) => {
 export const setUserOnline = (userId: string) => {
   const index = userDatas.findIndex((userData) => userData.id === userId);
   if (index != -1) {
-    userDatas[index].isOnline = false;
+    userDatas[index].isOnline = true;
   }
   roomDatas.forEach((room) => {
     room.roomUsers.forEach((user) => {

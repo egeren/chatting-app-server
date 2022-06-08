@@ -38,14 +38,13 @@ export const userActions = (socket: Socket) => {
   socket.on("new-user", (data: INewUserData) => {
     const { username, avatar } = data;
     const { userId, token } = socket.handshake.auth;
-    console.log("new-user", userId);
+
     const generatedAvatar =
       avatar == "default" ? generateProfileGradient() : avatar;
     addNewUser(userId, token, username, generatedAvatar)
       .then((user) => {
         globalRooms.map((room) => {
           if (room.isGlobal) {
-            console.log(room.roomName + "is global " + room.isGlobal);
             socket.join(room.id);
             socket
               .in(room.id)
@@ -66,18 +65,20 @@ export const userActions = (socket: Socket) => {
 
   socket.on("remember-me", () => {
     const { userId, token } = socket.handshake.auth;
-    setUserOnline(userId);
     const verify = verifyToken(token, userId);
     if (verify) {
+      setUserOnline(userId);
       const user = findUserById(userId);
       const roomIds = GetJoinedRoomIds(userId);
       socket.join(roomIds);
       socket.emit("logged-in", { ...user, token: token });
+
+      socket.broadcast.emit("update-users", userDatas);
     }
   });
+
   socket.on("request-server-data", () => {
     sendServerData(socket);
-    console.log("server-data sent");
   });
 
   socket.on("send-chat-message", (data) => {
@@ -103,8 +104,7 @@ export const userActions = (socket: Socket) => {
     const { userId, roomId, username } = data;
     const room = findRoomById(roomId);
     if (room) {
-      io.in(room.id).emit("someone-typing", data);
-      console.log("typing", data);
+      socket.in(room.id).emit("someone-typing", data);
     }
   });
 
@@ -131,7 +131,6 @@ export const userActions = (socket: Socket) => {
 
   socket.on("accept-invite", (data: { roomId: string; user: UserData }) => {
     const room = findRoomById(data.roomId);
-    console.log("accept invite", data);
     if (room) {
       socket.join(room.id);
       socket.in(room.id).emit("join-room", data);
@@ -154,9 +153,5 @@ export const userActions = (socket: Socket) => {
     console.log("disconnect");
     setUserOffline(socket.handshake.auth.userId);
     socket.broadcast.emit("update-users", userDatas);
-  });
-
-  socket.on("test", () => {
-    console.log("test");
   });
 };

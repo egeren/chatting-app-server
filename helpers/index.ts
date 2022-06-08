@@ -13,10 +13,8 @@ export const checkUserData = (user: UserData) => {
     const userNameCheck = checkEmpty(username);
     const avatarCheck = checkEmpty(avatar);
     if (userNameCheck) {
-      console.log("usernamecheck");
       reject("Username cannot be empty.");
     } else if (avatarCheck) {
-      console.log("avatarcheck");
       reject("Avatar cannot be empty.");
     } else {
       resolve(true);

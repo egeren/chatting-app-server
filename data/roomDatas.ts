@@ -20,15 +20,7 @@ export const globalRooms: RoomData[] = [
     roomCreator: "",
     roomAvatar: "images/chat-logo.svg",
     roomUsers: [],
-    roomMessages: [
-      {
-        id: "dummyUser",
-        roomId: "globalRoom1",
-        userId: "dummyUser",
-        message: "this is dummy message.",
-        timestamp: new Date(),
-      },
-    ],
+    roomMessages: [],
     isGlobal: true,
   },
 ];

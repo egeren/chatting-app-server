@@ -17,8 +17,6 @@ export const sendServerData = (socket: Socket) => {
       (user) => user.id === socket.handshake.auth.userId
     );
 
-    console.log(room.roomName, room.roomUsers);
-
     if (isRoomCreator || isRoomGlobal || isUserInRoom) {
       return room;
     }
