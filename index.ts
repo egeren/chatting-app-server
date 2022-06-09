@@ -1,18 +1,17 @@
 import { Server } from "socket.io";
 import { userActions } from "./controllers/userSocketActions";
 import { readFileSync } from "fs";
-import { createSecureServer } from "http2";
+import { createServer } from "https";
 
-const httpServer = createSecureServer({
-  allowHTTP1: true,
+const httpServer = createServer({
   key: readFileSync("../private.key"),
   cert: readFileSync("../certificate.crt"),
 });
 const port = process.env.npm_config_port || 8080;
 
-export const io = new Server({
+export const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+    origin: "https://live-chatting-app.vercel.app",
   },
 });
 
