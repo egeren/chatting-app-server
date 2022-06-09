@@ -6,7 +6,7 @@ import { createSecureServer } from "http2";
 const httpServer = createSecureServer({
   allowHTTP1: true,
   key: readFileSync("../private.key"),
-  cert: readFileSync("../certificate.pem"),
+  cert: readFileSync("../certificate.crt"),
 });
 const port = process.env.npm_config_port || 8080;
 
