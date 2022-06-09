@@ -1,6 +1,11 @@
 {
+  "name":"chatting-app-server" ,
   "scripts": {
-    "start": "nodemon index.ts"
+    "start": "nodemon index.ts",
+    "set-port": "npm config set chatting-app-server:port"
+  },
+  "config": {
+    "port": "8080"
   },
   "dependencies": {
     "socket.io": "^4.5.1",
