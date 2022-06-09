@@ -21,6 +21,6 @@ io.on("connection", (socket) => {
   userActions(socket);
 });
 
-io.listen(port as number);
+httpServer.listen(port as number);
 
 console.log("Socket.IO Listening at", port);
