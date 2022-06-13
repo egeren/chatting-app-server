@@ -94,7 +94,7 @@ export const userActions = (socket: Socket) => {
         userId: socket.handshake.auth.userId,
       };
       room!.roomMessages.push(parsedMessage);
-
+      socket.emit("received-message", parsedMessage);
       io.in(room!.id).emit("received-messsage", parsedMessage);
     } else {
       socket.emit("error", "Room not found.");

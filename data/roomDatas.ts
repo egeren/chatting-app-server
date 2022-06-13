@@ -18,7 +18,7 @@ export const globalRooms: RoomData[] = [
     roomName: "Global Room 1",
     roomDescription: "This is the first global room.",
     roomCreator: "",
-    roomAvatar: "images/chat-logo.svg",
+    roomAvatar: "chat-logo.svg",
     roomUsers: [],
     roomMessages: [],
     isGlobal: true,
