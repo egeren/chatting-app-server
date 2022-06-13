@@ -45,11 +45,11 @@ export const userActions = (socket: Socket) => {
       .then((user) => {
         globalRooms.map((room) => {
           if (room.isGlobal) {
+            addUserToRoom(user as UserData, room.id);
             socket.join(room.id);
             socket
               .in(room.id)
               .emit("join-room", { roomId: room.id, user: user });
-            addUserToRoom(user as UserData, room.id);
           }
         });
         socket.emit("logged-in", user);
@@ -131,10 +131,15 @@ export const userActions = (socket: Socket) => {
 
   socket.on("accept-invite", (data: { roomId: string; user: UserData }) => {
     const room = findRoomById(data.roomId);
-    if (room) {
+    const user = findUserById(data.user.id);
+    if (room && user) {
+      const confirmedData = {
+        roomId: room.id,
+        user: user,
+      };
+      addUserToRoom(user, room.id);
       socket.join(room.id);
-      socket.in(room.id).emit("join-room", data);
-      addUserToRoom(data.user, room.id);
+      socket.in(room.id).emit("join-room", confirmedData);
     } else {
       socket.emit("error", "Room not found or deleted.");
     }

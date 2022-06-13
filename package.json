@@ -1,5 +1,5 @@
 {
-  "name":"chatting-app-server" ,
+  "name": "chatting-app-server",
   "scripts": {
     "start": "nodemon index.ts",
     "set-port": "npm config set chatting-app-server:port"
@@ -8,6 +8,8 @@
     "port": "8080"
   },
   "dependencies": {
+    "@types/dotenv": "^8.2.0",
+    "dotenv": "^16.0.1",
     "socket.io": "^4.5.1",
     "uuid": "^8.3.2"
   },

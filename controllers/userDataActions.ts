@@ -77,7 +77,8 @@ export const setUserAvatar = (userId: string, avatar: string) => {
   }
   roomDatas.forEach((room, index) => {
     const userIndex = room.roomUsers.findIndex((user) => user.id === userId);
-    if (index != -1) {
+    console.log("userindex", userIndex, "roomname", room.roomName);
+    if (userIndex != -1) {
       roomDatas[index].roomUsers[userIndex].avatar = avatar;
     }
   });
