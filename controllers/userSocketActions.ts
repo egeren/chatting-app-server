@@ -26,6 +26,7 @@ import { generateProfileGradient } from "../helpers";
 import { UserData } from "../data/userDatas";
 import { userDatas } from "../data/userDatas";
 import { findUserIdByToken, verifyToken } from "./tokenDataActions";
+import { createImageFile } from "../helpers/imageHandler";
 
 interface INewUserData {
   username: string;
@@ -40,7 +41,7 @@ export const userActions = (socket: Socket) => {
     const { userId, token } = socket.handshake.auth;
 
     const generatedAvatar =
-      avatar == "default" ? generateProfileGradient() : avatar;
+      avatar == "default" ? generateProfileGradient() : createImageFile(avatar);
     addNewUser(userId, token, username, generatedAvatar)
       .then((user) => {
         globalRooms.map((room) => {
@@ -147,7 +148,8 @@ export const userActions = (socket: Socket) => {
 
   socket.on("photo-change", (data) => {
     const { userId, avatar } = data;
-    setUserAvatar(userId, avatar);
+    const avatarSrc = createImageFile(avatar);
+    setUserAvatar(userId, avatarSrc);
     socket.emit("update-users", userDatas);
     socket.broadcast.emit("update-users", userDatas);
     socket.emit("update-rooms", roomDatas);

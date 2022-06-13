@@ -6,6 +6,7 @@ import { v4 as uuid } from "uuid";
 import { findTokenByUserId } from "./tokenDataActions";
 import { findUserById } from "./userDataActions";
 import { io } from "..";
+import { createImageFile } from "../helpers/imageHandler";
 
 export interface INewRoomData {
   roomName: string;
@@ -66,7 +67,9 @@ export const createNewRoom = (data: INewRoomData) => {
     id: uuid(),
     roomName: roomName,
     roomAvatar:
-      roomAvatar == "default" ? generateProfileGradient() : roomAvatar,
+      roomAvatar == "default"
+        ? generateProfileGradient()
+        : createImageFile(roomAvatar),
     roomUsers: [],
     roomMessages: [],
     isGlobal: false,
