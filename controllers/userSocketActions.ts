@@ -45,9 +45,11 @@ export const userActions = (socket: Socket) => {
     addNewUser(userId, token, username, generatedAvatar)
       .then((user) => {
         globalRooms.map((room) => {
+          console.log(room);
           if (room.isGlobal) {
-            addUserToRoom(user as UserData, room.id);
+            addUserToRoom(user, room.id);
             socket.join(room.id);
+            console.log(room.id);
             socket
               .in(room.id)
               .emit("join-room", { roomId: room.id, user: user });
@@ -160,5 +162,6 @@ export const userActions = (socket: Socket) => {
     console.log("disconnect");
     setUserOffline(socket.handshake.auth.userId);
     socket.broadcast.emit("update-users", userDatas);
+    socket.disconnect();
   });
 };
