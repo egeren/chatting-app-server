@@ -1,4 +1,5 @@
-import { Socket } from "socket.io";
+import { RemoteSocket, Socket } from "socket.io";
+import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { userDatas } from "../data";
 import { messageDatas } from "../data/messageDatas";
 import { roomDatas } from "../data/roomDatas";
@@ -9,7 +10,9 @@ export const sendUserData = (socket: Socket) => {
   return user;
 };
 
-export const sendServerData = (socket: Socket) => {
+export const sendServerData = (
+  socket: Socket | RemoteSocket<DefaultEventsMap, any>
+) => {
   const usersRoomDatas = roomDatas.filter((room) => {
     const isRoomCreator = room.roomCreator === socket.handshake.auth.userId;
     const isRoomGlobal = room.isGlobal;

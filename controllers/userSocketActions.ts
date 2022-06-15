@@ -152,10 +152,9 @@ export const userActions = (socket: Socket) => {
     const { userId, avatar } = data;
     const avatarSrc = createImageFile(avatar);
     setUserAvatar(userId, avatarSrc);
-    socket.emit("update-users", userDatas);
-    socket.broadcast.emit("update-users", userDatas);
-    socket.emit("update-rooms", roomDatas);
-    socket.broadcast.emit("update-rooms", roomDatas);
+    io.fetchSockets().then((sockets) => {
+      sockets.forEach((socket) => sendServerData(socket));
+    });
   });
 
   socket.on("disconnect", () => {
